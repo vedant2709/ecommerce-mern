@@ -1,14 +1,15 @@
 import React from "react";
 import logo from "../images/logo.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Badge from "@mui/material/Badge";
 
 function Navbar() {
   return (
-    <div className="w-full h-[70px] px-10 py-3 bg-zinc-900 flex items-center justify-between ">
+    <div className="w-full h-[70px] px-10 py-3 bg-zinc-900 flex items-center justify-between">
       <div className="w-[12vw]">
         <img src={logo} alt="" className="w-full" />
       </div>
-      <div className="w-[35vw] bg-[#FEBD69] rounded-md flex">
+      <div className="w-[35vw] bg-[#FEBD69] rounded-md flex items-center">
         <input
           type="text"
           placeholder="Search Your Products"
@@ -21,12 +22,15 @@ function Navbar() {
       <div className="flex gap-8 text-white  items-center">
         <h1 className="text-xl font-semibold">Sign In</h1>
         <div className="flex items-end gap-1">
-          <i className="fa-solid fa-cart-shopping text-xl"></i>
+          <Badge badgeContent={4} color="primary">
+            <i className="fa-solid fa-cart-shopping text-xl"></i>
+          </Badge>
+
           <h2 className="text-sm">Cart</h2>
         </div>
-        <Avatar >
+        <Avatar>
           <AvatarImage />
-          <AvatarFallback className='bg-zinc-700'>
+          <AvatarFallback className="bg-zinc-700">
             <i class="fa-solid fa-user text-xl"></i>
           </AvatarFallback>
         </Avatar>
