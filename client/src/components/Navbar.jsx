@@ -2,6 +2,7 @@ import React from "react";
 import logo from "../images/logo.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Badge from "@mui/material/Badge";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -20,7 +21,7 @@ function Navbar() {
         </div>
       </div>
       <div className="flex gap-8 text-white  items-center">
-        <h1 className="text-xl font-semibold">Sign In</h1>
+        <Link to={'/signin'} className="text-xl font-semibold">Sign In</Link>
         <div className="flex items-end gap-1">
           <Badge badgeContent={4} color="primary">
             <i className="fa-solid fa-cart-shopping text-xl"></i>
