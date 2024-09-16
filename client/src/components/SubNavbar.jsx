@@ -2,19 +2,25 @@ import React, { useEffect, useState } from "react";
 import nav from "../images/nav.jpg";
 import { useDispatch } from "react-redux";
 import { fetchProductsByCategory } from "@/redux/slice/product";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SubNavbar() {
   const dispatch = useDispatch();
   const navigate=useNavigate()
 
-  const [catid,setcatid]=useState("tyy");
+  const [catid,setcatid]=useState("");
+  const [catname,setcatname]=useState("");
+
+  const handleCategoryChange=(id,name)=>{
+    setcatid(id)
+    setcatname(name)
+  }
   
   useEffect(() => {
     if (catid) {
       // Fetch products by category and navigate to /products
       dispatch(fetchProductsByCategory(catid));
-      navigate("/products");
+      navigate(`/products/${catid}/${catname}`)
     }
   }, [catid, dispatch, navigate]);
   return (
@@ -24,12 +30,12 @@ function SubNavbar() {
           <i className="fa-solid fa-cart-shopping text-sm"></i>
           <h2>All</h2>
         </div>
-        <button onClick={()=>setcatid('tyy')}>Mobiles</button>
-        <button onClick={()=>setcatid('abc')}>Sports</button>
-        <button onClick={()=>setcatid('bks')}>Books</button>
-        <button onClick={()=>setcatid('qoc')}>Exercise & Fitness</button>
-        <button onClick={()=>setcatid('rja')}>Home Cleaning</button>
-        <button onClick={()=>setcatid('tng')}>Toys & Games</button>
+        <button onClick={()=>handleCategoryChange('tyy','mobiles')}>Mobiles</button>
+        <button onClick={()=>handleCategoryChange('abc','sports')}>Sports</button>
+        <button onClick={()=>handleCategoryChange('bks','books')}>Books</button>
+        <button onClick={()=>handleCategoryChange('qoc','exercise-fitness')}>Exercise & Fitness</button>
+        <button onClick={()=>handleCategoryChange('rja','homecleaning')}>Home Cleaning</button>
+        <button onClick={()=>handleCategoryChange('tng','toys-games')}>Toys & Games</button>
       </div>
       <div className="right w-[30%]">
         <img src={nav} alt="" className="w-full object-cover"/>

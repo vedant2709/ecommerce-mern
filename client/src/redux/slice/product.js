@@ -114,33 +114,73 @@ export const fetchProductsByCategory=createAsyncThunk('fetchProductsByCategory',
     }
 })
 
+export const fetchSingleProduct=createAsyncThunk('fetchSingleProduct',async (product_id)=>{
+
+  const options = {
+    method: 'GET',
+    url: 'https://real-time-flipkart-api.p.rapidapi.com/product-details',
+    params: {
+      pid: product_id
+    },
+    headers: {
+      'x-rapidapi-key': '9a075b31a6mshcf946ed8a384763p1621f0jsn60a419664a93',
+      'x-rapidapi-host': 'real-time-flipkart-api.p.rapidapi.com'
+    }
+  };
+  try {
+      const response = await axios.request(options);
+      console.log(response.data);
+      return response.data
+    } catch (error) {
+      console.error(error);
+    }
+})
+
 const productSlice=createSlice({
   name:"product",
   initialState:{
     categoryData:{},
     productDeals:[],
+    singleProduct:[],
+    isLoading:false,
   },
   reducers:{
     getProductDeals:(state)=>{
       state.productDeals=productDeals;
+    },
+    removeSingleProduct:(state)=>{
+      state.singleProduct.splice(0,state.singleProduct.length);
+      console.log(state.singleProduct.length);
     }
   },
   extraReducers:(builder)=>{
-    builder.addCase(fetchProductsByCategory.pending,()=>{
+    builder.addCase(fetchProductsByCategory.pending,(state)=>{
       console.log("Pending...")
+      state.isLoading=true;
     })
     builder.addCase(fetchProductsByCategory.rejected,()=>{
       console.log("Rejected...")
     })
     builder.addCase(fetchProductsByCategory.fulfilled,(state,action)=>{
+      state.isLoading=false;
       console.log("Fulfilled...")
       const { category_id, products } = action.payload;
       state.categoryData[category_id] = products;
+    })
+    builder.addCase(fetchSingleProduct.fulfilled,(state,action)=>{
+      console.log(state.singleProduct.length);
+      state.isLoading=false;
+      console.log("Fetched single product");
+      state.singleProduct.push(action.payload);
+      console.log(state.singleProduct.length);
+    })
+    builder.addCase(fetchSingleProduct.pending,(state)=>{
+      state.isLoading=true;
     })
   }
 })
 
 
 
-export const {getProductDeals}=productSlice.actions;
+export const {getProductDeals,removeSingleProduct}=productSlice.actions;
 export default productSlice.reducer;

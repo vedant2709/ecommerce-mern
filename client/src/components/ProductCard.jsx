@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function ProductCard({ products }) {
   return (
-    <Link>
+    <Link to={`/${products.pid}`}>
       <div className="group w-[20vw] h-[25vw] bg-white rounded-md overflow-hidden shadow-md">
         <div className="w-full h-[60%] bg-white">
           <img
